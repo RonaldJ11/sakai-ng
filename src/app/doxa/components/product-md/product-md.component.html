@@ -10,130 +10,101 @@
                         productsSh.length }}</span></i>
             </button>
 
-            <p-dataView #dv [value]="productsApi" [paginator]="false" [rows]="14" filterBy="name"
-                [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
-                <ng-template pTemplate="header">
-                    <div class="flex flex-column md:flex-row md:justify-content-between gap-2">
-                        <p-dropdown [options]="sortOptions" placeholder="Ordena Por precio"
-                            (onChange)="onSortChange($event)"></p-dropdown>
-                        <span class="p-input-icon-left">
-                            <i class="pi pi-search"></i>
-                            <input type="search" pInputText placeholder="Buscar por Nombre"
-                                (input)="onFilter(dv, $event)">
-                        </span>
-                        <span class="p-input-icon-right">
+            <div style=" height:550px; overflow-y: scroll;">
+                <p-dataView #dv [value]="productsApi" [paginator]="false" [rows]="14" filterBy="name"
+                    [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+                    <ng-template pTemplate="header">
+                        <label for="info">Filtro:</label>
+                        <div id="info" class="flex flex-column md:flex-row gap-1 mt-2 md:justify-content">
+                            <span class="p-input">
+                                <input type="search" pInputText placeholder="Marca" (input)="onFilter(dv, $event)">
+                            </span>
+                            <span class="p-input">
+                                <input type="search" pInputText placeholder="Descripcion"
+                                    (input)="onFilter(dv, $event)">
+                            </span>
+                            <span class="p-input">
+                                <input type="search" pInputText placeholder="Categoria" (input)="onFilter(dv, $event)">
+                            </span>
+
+                        </div>
+                        <span
+                            class="p-input-icon-center ml-1 flex flex-column md:flex-row gap-1 mt-2 md:justify-content-between">
+
                             <p-dataViewLayoutOptions>
                             </p-dataViewLayoutOptions>
+
+                            <span _ngcontent-jfl-c99="" class="p-input-icon-right ng-star-inserted">
+                                <button pripple="" class="p-ripple p-element p-button p-component"
+                                    type="button"><!----><span aria-hidden="true"
+                                        class="pi pi-search p-button-icon p-button-icon-left ng-star-inserted"></span><!----><span
+                                        class="p-button-label ng-star-inserted"
+                                        aria-hidden="false">Buscar</span><!----><!----><span
+                                        class="p-ink"></span></button>
+                            </span>
                         </span>
 
-                    </div>
-                </ng-template>
+                    </ng-template>
 
-                <ng-template let-product pTemplate="listItem">
-                    <div class="col-12">
-                        <div class="flex flex-column md:flex-row align-items-center p-3 w-full">
-                            <img [src]="'assets/demo/images/product/shoes.jpg'" [alt]="product.idReferencia"
-                                class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
-                            <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
-                                <div class="font-bold text-2xl">{{product.idReferencia}}</div>
-                                <div class="mb-2">{{product.descSservicio}}</div>
-                                <p-rating [ngModel]="product.estado" [readonly]="true" [cancel]="false"
-                                    styleClass="mb-2"></p-rating>
-                                <div class="flex align-items-center mt-2">
-                                    <i class="pi pi-tag mr-2"></i>
-                                    <span class="font-semibold">{{product.idServicio}}</span>
+                    <ng-template let-product pTemplate="listItem">
+                        <div class="col-12">
+                            <div class="flex flex-column md:flex-row align-items-center p-3 w-full">
+                                <img [src]="'assets/demo/images/product/imagen-no-disponible.png'"
+                                    [alt]="product.idReferencia" class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
+                                <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                                    <div class="font-bold text-2xl">{{product.idReferencia}}</div>
+                                    <div class="mb-2">{{product.descSservicio}}</div>
+                                    <p-rating [ngModel]="product.estado" [readonly]="true" [cancel]="false"
+                                        styleClass="mb-2"></p-rating>
+                                    <div class="flex align-items-center mt-2">
+                                        <i class="pi pi-tag mr-2"></i>
+                                        <span class="font-semibold">{{product.idServicio}}</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+                                    <span
+                                        class="text-1xl font-semibold mb-2 align-self-center md:align-self-end">${{product.precio}}</span>
+                                    <p-button icon="pi pi-shopping-cart" label="Add to Cart"
+                                        [disabled]="product.estado === 'OUTOFSTOCK'" styleClass="mb-2 p-button-sm"
+                                        (click)="addShoppe(product)"></p-button>
+                                    <span [class]="'product-badge status-' + product.estado">{{product.estado}}</span>
                                 </div>
                             </div>
-                            <div
-                                class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
-                                <span
-                                    class="text-1xl font-semibold mb-2 align-self-center md:align-self-end">${{product.precio}}</span>
-                                <p-button icon="pi pi-shopping-cart" label="Add to Cart"
-                                    [disabled]="product.estado === 'OUTOFSTOCK'"
-                                    styleClass="mb-2 p-button-sm"></p-button>
-                                <span [class]="'product-badge status-' + product.estado">{{product.estado}}</span>
-                            </div>
                         </div>
-                    </div>
-                </ng-template>
+                    </ng-template>
 
-                <ng-template let-product pTemplate="gridItem" style="background: rgb(245,245,245);
-				background: linear-gradient(0deg, rgba(245,245,245,1) 0%, rgba(255,255,255,1) 40%);">
-                    <div class="col-12 md:col-4">
-                        <div class="card m-3 border-1 surface-border">
-                            <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
-                                <div class="flex align-items-center">
-                                    <i class="pi pi-tag mr-2"></i>
-                                    <span class="font-semibold">{{product.estado}}</span>
+                    <ng-template let-product pTemplate="gridItem">
+                        <div class="col-12 md:col-4">
+                            <div class="card m-3 border-1 surface-border" (click)="infoButton(product)">
+                                <div class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
+                                    <div class="flex align-items-center">
+                                        <i class="pi pi-tag mr-2"></i>
+                                        <span class="font-semibold">{{product.estado}}</span>
+                                    </div>
+                                    <span
+                                        [class]="'product-badge status-' + product.estado.toLowerCase()">{{product.idServicio}}</span>
                                 </div>
-                                <span
-                                    [class]="'product-badge status-' + product.estado.toLowerCase()">{{product.estado}}</span>
-                            </div>
-                            <div class="flex flex-column align-items-center text-center mb-3">
-                                <img [src]="'assets/demo/images/product/shoes.jpg' " [alt]="product.idServicio"
-                                    class="w-9 shadow-2 my-3 mx-0" />
-                                <div class="text-2xl font-bold">{{product.idReferencia}}</div>
-                                <div class="mb-3">{{product.descSservicio}}</div>
-                                <p-rating [ngModel]="product.estado" [readonly]="true" [cancel]="false"></p-rating>
-                            </div>
-                            <div class="flex align-items-center justify-content-between">
-                                <span class="text-1xl font-semibold">${{product.precio}}</span>
-                                <span class="p-buttonset">
-                                    <!-- <button pbutton="" pripple="" label="info" icon="pi pi-search"
-                                        class="p-element p-ripple p-button p-button-secondary p-component"><span
-                                            class="p-button-icon p-button-icon-left pi pi-search"
-                                            (click)="op2.toggle($event)"></span>
-                                    </button> -->
-                                    <p-overlayPanel #op2 [showCloseIcon]="true" [style]="{width: '700px'}">
-                                        <ng-template pTemplate>
-                                            <div class="card m-3 border-1 surface-border">
-                                                <div
-                                                    class="flex flex-wrap gap-2 align-items-center justify-content-between mb-2">
-                                                    <div class="flex align-items-center">
-                                                        <i class="pi pi-tag mr-2"></i>
-                                                        <span class="font-semibold">{{product.estado}}</span>
-                                                    </div>
-                                                    <span
-                                                        [class]="'product-badge status-' + product.estado.toLowerCase()">{{product.estado}}</span>
-                                                </div>
-                                                <div class="flex flex-column align-items-center text-center mb-3">
-                                                    <img [src]="'assets/demo/images/product/' + product.image"
-                                                        [alt]="product.name" class="w-9 shadow-2 my-3 mx-0" />
-                                                    <div class="text-2xl font-bold">{{product.name}}</div>
-                                                    <div class="mb-3">
-                                                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse
-                                                        vero iste qui dolorem. Reprehenderit, saepe excepturi fugiat
-                                                        tempore aliquid laudantium. Harum consectetur ullam dignissimos
-                                                        libero ab perferendis ducimus iusto fuga consequuntur! Impedit
-                                                        maiores similique excepturi voluptatem ipsum omnis alias
-                                                        tempore, aperiam ex facilis recusandae vel quam, cupiditate
-                                                        voluptas sint! Nisi.
-                                                    </div>
-                                                    <p-rating [ngModel]="product.rating" [readonly]="true"
-                                                        [cancel]="false"></p-rating>
-                                                </div>
-                                                <div class="flex align-items-center justify-content-between">
-                                                    <span class="text-2xl font-semibold">${{product.price}}</span>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                    </p-overlayPanel>
-                                    <button (click)="addShoppe(product)"
-                                        [disabled]="product.inventoryStatus === 'OUTOFSTOCK'" pbutton="" pripple=""
-                                        label="Delete" icon="pi pi-shopping-cart"
-                                        class="p-element p-ripple p-button p-component"><span
-                                            class="p-button-icon p-button-icon-left pi pi-shopping-cart"
-                                            aria-hidden="true"></span>
-                                    </button>
-                                </span>
+                                <div class="flex flex-column align-items-center text-center mb-3">
+                                    <img [src]="'assets/demo/images/product/imagen-no-disponible.png' "
+                                        [alt]="product.idServicio" class="w-9 shadow-2 my-3 mx-0" />
+                                    <div class="text-2xl font-bold">{{product.idReferencia}}</div>
+                                    <div class="mb-3">{{product.descSservicio}}</div>
+                                </div>
+                                <div class="flex align-items-center justify-content-between">
+                                    <span class="text-1xl font-semibold">${{product.precio}}</span>
+                                    <button pButton pRipple (click)="addShoppe(product)"
+                                        icon="pi pi-shopping-cart"></button>
 
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </ng-template>
+                    </ng-template>
 
-            </p-dataView>
+                </p-dataView>
+            </div>
+
 
 
             <div class="flex align-items-center justify-content-center  border-round"
@@ -155,21 +126,64 @@
         </div>
     </div>
     <div class="col-4">
+        <div class="card" >
+            <h5>INFO DE PRODUCTO</h5>
+            <div class="flex flex-column md:flex-row align-items-center p-3 w-full">
+                <img [src]="'assets/demo/images/product/imagen-no-disponible.png'" [alt]="'Pruena de producto'"
+                    class="my-4 md:my-0 w-9 md:w-10rem shadow-2 mr-5" />
+                <div class="flex-1 flex flex-column align-items-center text-center md:text-left">
+                    <div>
+                        <div class="font-bold text-1xl">Facturas</div>
+                        <div class="mb-2">{{productDetails.idServicio}}</div>
+                    </div>
+                </div>
+                <div
+                    class="flex flex-row md:flex-column justify-content-between w-full md:w-auto align-items-center md:align-items-end mt-5 md:mt-0">
+                    <span [class]="'product-badge status-' + 'estado'">Precio:</span>
+                    <span class="text-1xl font-semibold mb-2 align-self-center md:align-self-center   ">${{productDetails.precio}}</span>
+                    <!-- <p-button icon="pi pi-shopping-cart" label="Add to Cart"
+                        styleClass="mb-2 p-button-sm" (click)="addShoppe([])" ></p-button> -->
+                </div>
+            </div>
+            <div class="col-12 lg:col-12 xl:col-12">
+                <div class="card mb-0">
+                    <div class="flex justify-content-between mb-3">
+                        <div>
+                            <span class="block text-500 font-medium mb-3">
+                                <h3><strong>Descripcion:</strong></h3>
+                            </span>
+                            <div class="text-700 font-medium ">{{productDetails.descSservicio}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex align-items-center justify-content-center  border-round">
+                <button (click)="endShoope()" pButton pRipple label="Agregar a la canasta" icon="pi pi-shopping-cart"
+                    class="p-button-raised p-button-success"></button>
+            </div>
+        </div>
         <div class="card">
             <h5>Canasta</h5>
             <p-table [value]="productsSh" [paginator]="true" [rows]="14" responsiveLayout="scroll">
                 <ng-template pTemplate="header">
                     <tr>
-                        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
-                        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+                        <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="price">Precio <p-sortIcon field="price"></p-sortIcon></th>
+                        <th pSortableColumn="cantidad">Cantidad <p-sortIcon field="price"></p-sortIcon></th>
                         <th></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-product>
                     <tr>
-                        <td style="width: 35%; min-width: 7rem;">{{product.idServiciod>
-                        <td style="width: 35%; min-width: 8rem;">{{product.precio | currency:'COP'}}</td>
-                        <td style="width: 15%;">
+                        <td style="width: 20%; min-width: 7rem;">{{product.idServicio}}
+                        <td style="width: 20%; min-width: 8rem;">{{product.precio | currency:'COP'}}</td>
+                        <td style="width: 50%; min-width: 8rem;">
+                            <p-inputNumber inputStyleClass="form-control-inputnumber" mode="decimal"
+                                [showButtons]="true" [min]="0" [max]="100">
+                            </p-inputNumber>
+                        </td>
+                        <td style="width: 10%;">
                             <button pButton pRipple type="button" icon="pi pi-trash"
                                 class="p-button p-component p-button-text p-button-danger p-button-icon-only"
                                 (click)="deleteProduct(product)"></button>
@@ -193,13 +207,9 @@
 
                 </div>
             </div>
-            <div class="flex align-items-center justify-content-center bg-orange-100 border-round"
-                [ngStyle]="{width: '7.5rem', height: '3rem'}">
-
-                <a (click)="endShoope()">
-                    <i class="pi pi-shopping-cart text-red-500 text-xl mb-2"></i><strong class="mb-1 text-red-500">
-                        FINALIZAR</strong>
-                </a>
+            <div class="flex align-items-center justify-content-center  border-round">
+                <button (click)="endShoope()" pButton pRipple label="Pagar" icon="pi pi-shopping-cart"
+                    class="p-button-raised p-button-success"></button>
             </div>
         </div>
     </div>

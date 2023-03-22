@@ -25,6 +25,7 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SidebarModule } from 'primeng/sidebar';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { TooltipModule } from 'primeng/tooltip';
+import {  InputNumberModule } from 'primeng/inputnumber';
 
 
 
@@ -57,7 +58,8 @@ import { TooltipModule } from 'primeng/tooltip';
 		OverlayPanelModule,
 		SidebarModule,
 		ConfirmPopupModule,
-		TooltipModule
+		TooltipModule,
+		InputNumberModule
 	]
 })
 export class ProductMDModule { }

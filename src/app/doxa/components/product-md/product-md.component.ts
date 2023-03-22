@@ -24,6 +24,29 @@ export class ProductMdComponent implements OnInit {
 
   products: Product[] = [];
 
+  productDetails :ProductApi = {
+    idTarifa:       "",
+    idServicio:     "",
+    idReferencia:   "",
+    descSservicio:  "",
+    precio:         "",
+    prcIva:         "",
+    prcSinIva:      "",
+    nomMarca:       "",
+    stock:          "",
+    precioPromo:    "",
+    estado:         "",
+    fechaPrecio:    "",
+    idUnidad:       "",
+    idMarca:        "",
+    prefijo:        "",
+    aux:            "",
+    artConDesXCant: "",
+    stockDispo:     "",
+    descMax:        "",
+    conNoticia:     "",
+  };
+
   productsApi: ProductApi[] = []
 
   resultApi: ResultApi = {};
@@ -115,11 +138,16 @@ export class ProductMdComponent implements OnInit {
     this.updateTable();
   }
 
+  infoButton(product : ProductApi) {
+    this.productDetails=product;
+    
+  }
 
   updateTable() {
     this.productService.getProductsApi(this.productSearch, this.producPage).then(data => {
       // console.log(data.data)
       this.productsApi = data.data;
+      
       window.scroll({
         top: 0,
         left: 0,
